@@ -3,10 +3,47 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:NorthwindWPF"
+        xmlns:nwviewmodel="clr-namespace:NorthwindViewModelLib;assembly=NorthwindViewModelLib"
+        d:DataContext="{d:DesignInstance nwviewmodel:MainWindowViewModel, IsDesignTimeCreatable=True}"
+        Initialized="MainWindow_OnInitialized"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
+        <!-- Autofilled -->
+        <Label Content="Min.Date" HorizontalAlignment="Left" Height="30" Margin="24,10,0,0" VerticalAlignment="Top" Width="61"/>
+        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="117" Margin="490,10,0,0" VerticalAlignment="Top" Width="300" />
+        <Label Content="Product-Name:" HorizontalAlignment="Left" Height="30" Margin="490,10,0,0" VerticalAlignment="Top" Width="92"/>
+        <Label Content="Supplier:" HorizontalAlignment="Left" Height="30" Margin="490,40,0,0" VerticalAlignment="Top" Width="92"/>
+        <Label Content="Quantity:" HorizontalAlignment="Left" Height="30" Margin="424,336,0,0" VerticalAlignment="Top" Width="61"/>
         
+        <!-- Contain Content Binding -->
+        <DatePicker HorizontalAlignment="Left" Height="30" Margin="90,10,0,0" VerticalAlignment="Top" Width="115"
+                    Text="{Binding MinDate, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+        <TextBox HorizontalAlignment="Left" Height="26" TextWrapping="Wrap" VerticalAlignment="Top" Width="180" Margin="582,13,0,0"
+                    Text="{Binding OrderDetailProductName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+        <TextBox HorizontalAlignment="Left" Height="26" TextWrapping="Wrap" VerticalAlignment="Top" Width="180" Margin="582,40,0,0"
+                    Text="{Binding OrderDetailSupplierName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+        <ListBox HorizontalAlignment="Left" Height="250" Margin="24,143,0,0" VerticalAlignment="Top" Width="330" 
+                    ItemsSource="{Binding Orders, Mode=OneWay}"
+                    IsSynchronizedWithCurrentItem="True"
+                    SelectedItem="{Binding SelectedOrder, Mode=TwoWay}"/>
+        <ListBox HorizontalAlignment="Left" Height="125" Margin="424,143,0,0" VerticalAlignment="Top" Width="366" 
+                    ItemsSource="{Binding OrderDetails, Mode=OneWay}"
+                    IsSynchronizedWithCurrentItem="True"
+                    SelectedItem="{Binding SelectedOrderDetail, Mode=TwoWay}"/>
+        <Label HorizontalAlignment="Left" Height="30" Margin="424,97,0,0" VerticalAlignment="Top" Width="61"
+                    Content="{Binding CurrentOrderDate}"/>
+        <ComboBox HorizontalAlignment="Left" Height="26" Margin="424,299,0,0" VerticalAlignment="Top" Width="266"
+                    ItemsSource="{Binding Products, Mode=OneWay}"
+                    IsSynchronizedWithCurrentItem="True"
+                    SelectedItem="{Binding SelectedProduct, Mode=TwoWay}"/>
+        <Button Content="Add" HorizontalAlignment="Left" Height="26" Margin="709,299,0,0" VerticalAlignment="Top" Width="81"
+                Command="{Binding AddOrderDetailCommand}"/>
+        <TextBox HorizontalAlignment="Left" Height="30" Margin="485,336,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                 Text="{Binding OrderDetailQuantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+        <Button Content="+" HorizontalAlignment="Left" Height="26" Margin="566,336,0,0" VerticalAlignment="Top" Width="21"
+                Command="{Binding IncreaseQuantity}"/>
+        <Button Content="-" HorizontalAlignment="Left" Height="26" Margin="530,336,0,0" VerticalAlignment="Top" Width="21"
+                Command="{Binding DecreaseQuantity}"/>
     </Grid>
 </Window>

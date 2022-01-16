@@ -2,6 +2,12 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NorthwindWPF", "NorthwindWPF\NorthwindWPF.csproj", "{54607341-FF7A-4E20-92D4-036208447A72}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NorthwindDb", "NorthwindDb\NorthwindDb.csproj", "{13752282-F35E-42AE-8521-DB75062396F0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvvmTools", "MvvmTools\MvvmTools.csproj", "{D43032C1-C3D3-4B7C-92A3-CA74FE436526}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NorthwindViewModelLib", "NorthwindViewModelLib\NorthwindViewModelLib.csproj", "{367B4F8E-8EC1-4460-9221-3C4513310749}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +18,17 @@ Global
 		{54607341-FF7A-4E20-92D4-036208447A72}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{54607341-FF7A-4E20-92D4-036208447A72}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{54607341-FF7A-4E20-92D4-036208447A72}.Release|Any CPU.Build.0 = Release|Any CPU
+		{13752282-F35E-42AE-8521-DB75062396F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{13752282-F35E-42AE-8521-DB75062396F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{13752282-F35E-42AE-8521-DB75062396F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{13752282-F35E-42AE-8521-DB75062396F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D43032C1-C3D3-4B7C-92A3-CA74FE436526}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D43032C1-C3D3-4B7C-92A3-CA74FE436526}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D43032C1-C3D3-4B7C-92A3-CA74FE436526}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D43032C1-C3D3-4B7C-92A3-CA74FE436526}.Release|Any CPU.Build.0 = Release|Any CPU
+		{367B4F8E-8EC1-4460-9221-3C4513310749}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{367B4F8E-8EC1-4460-9221-3C4513310749}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{367B4F8E-8EC1-4460-9221-3C4513310749}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{367B4F8E-8EC1-4460-9221-3C4513310749}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
