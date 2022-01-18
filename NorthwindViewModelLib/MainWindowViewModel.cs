@@ -59,6 +59,7 @@ public class MainWindowViewModel: ObservableObject
                 .ToList()
                 .Where(x => x.OrderId == SelectedOrder?.OrderId)
                 .AsObservableCollection() ?? new ObservableCollection<OrderDetail>();
+            CurrentOrderDate = $"{value?.OrderDate:yyyy-MM-dd}";
         }
     }
 
@@ -70,8 +71,6 @@ public class MainWindowViewModel: ObservableObject
         set
         {
             _orderDetailProductName = value;
-            if (SelectedProduct != null)
-                SelectedProduct.ProductName = value;
             NotifyPropertyChanged(nameof(OrderDetailProductName));
         }
     }
@@ -83,8 +82,6 @@ public class MainWindowViewModel: ObservableObject
         set
         {
             _orderDetailSupplierName = value;
-            if (SelectedProduct?.Supplier != null)
-                SelectedProduct.Supplier.CompanyName = value;
             NotifyPropertyChanged(nameof(OrderDetailSupplierName));
         }
     }
@@ -138,17 +135,7 @@ public class MainWindowViewModel: ObservableObject
         }
     }
 
-    private Product? _selectedProduct;
-    public Product? SelectedProduct
-    {
-        get => _selectedProduct;
-        set
-        {
-            _selectedProduct = value;
-            OrderDetailProductName = value?.ProductName ?? "";
-            OrderDetailSupplierName = value?.Supplier?.CompanyName ?? "";
-        }
-    }
+    public Product? SelectedProduct { get; set; }
     #endregion
     
     public MainWindowViewModel Init(NorthwindContext db)
