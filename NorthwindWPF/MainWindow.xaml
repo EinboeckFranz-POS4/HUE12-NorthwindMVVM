@@ -28,7 +28,7 @@
                     IsSynchronizedWithCurrentItem="True"
                     SelectedItem="{Binding SelectedOrder, Mode=TwoWay}"/>
         <ListBox HorizontalAlignment="Left" Height="125" Margin="424,143,0,0" VerticalAlignment="Top" Width="366" 
-                    ItemsSource="{Binding OrderDetails, Mode=OneWay}"
+                    ItemsSource="{Binding OrderDetailsOfSelectedOrder, Mode=OneWay}"
                     IsSynchronizedWithCurrentItem="True"
                     SelectedItem="{Binding SelectedOrderDetail, Mode=TwoWay}"/>
         <Label HorizontalAlignment="Left" Height="30" Margin="400,97,0,0" VerticalAlignment="Top" Width="80"

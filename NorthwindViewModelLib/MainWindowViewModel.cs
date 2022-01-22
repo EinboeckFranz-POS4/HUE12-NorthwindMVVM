@@ -55,48 +55,26 @@ public class MainWindowViewModel: ObservableObject
         set
         {
             _selectedOrder = value;
-            OrderDetails = _db?.OrderDetails
+            OrderDetailsOfSelectedOrder = _db?.OrderDetails
                 .ToList()
                 .Where(x => x.OrderId == SelectedOrder?.OrderId)
                 .AsObservableCollection() ?? new ObservableCollection<OrderDetail>();
             CurrentOrderDate = $"{value?.OrderDate:yyyy-MM-dd}";
         }
     }
-
-    #region OrderDetails Properties
-    private string _orderDetailProductName = "";
-    public string OrderDetailProductName
-    {
-        get => _orderDetailProductName;
-        set
-        {
-            _orderDetailProductName = value;
-            NotifyPropertyChanged(nameof(OrderDetailProductName));
-        }
-    }
-
-    private string _orderDetailSupplierName = "";
-    public string OrderDetailSupplierName
-    {
-        get => _orderDetailSupplierName;
-        set
-        {
-            _orderDetailSupplierName = value;
-            NotifyPropertyChanged(nameof(OrderDetailSupplierName));
-        }
-    }
     
-    private ObservableCollection<OrderDetail> _orderDetails = new();
-    public ObservableCollection<OrderDetail> OrderDetails
+    private ObservableCollection<OrderDetail> _orderDetailsOfSelectedOrder = new();
+    public ObservableCollection<OrderDetail> OrderDetailsOfSelectedOrder
     {
-        get => _orderDetails;
+        get => _orderDetailsOfSelectedOrder;
         set
         {
-            _orderDetails = value;
-            NotifyPropertyChanged(nameof(OrderDetails));
+            _orderDetailsOfSelectedOrder = value;
+            NotifyPropertyChanged(nameof(OrderDetailsOfSelectedOrder));
         }
     }
-    
+
+    #region Selected OrderDetail Properties
     private OrderDetail? _selectedOrderDetail;
     public OrderDetail? SelectedOrderDetail
     {
@@ -110,9 +88,59 @@ public class MainWindowViewModel: ObservableObject
             OrderDetailSupplierName = product?.Supplier?.CompanyName ?? "";
         }
     }
+    
+    private string _orderDetailProductName = "";
+    public string OrderDetailProductName
+    {
+        get => _orderDetailProductName;
+        set
+        {
+            if (_db?.Products.ToList().All(x => x.ProductName != value) ?? false)
+            {
+                var product = _db.Products.SingleOrDefault(x => x.ProductName == _orderDetailProductName);
+                if (product != null)
+                {
+                    product.ProductName = value;
+                    _db.SaveChanges();
+                }
+                SelectedOrderDetail = SelectedOrderDetail;
+                ReloadProducts();
+            }
+            _orderDetailProductName = value;
+            NotifyPropertyChanged(nameof(OrderDetailProductName));
+        }
+    }
+
+    private string _orderDetailSupplierName = "";
+
+    public string OrderDetailSupplierName
+    {
+        get => _orderDetailSupplierName;
+        set
+        {
+            if (_db?.Suppliers.ToList().All(x => x.CompanyName != value) ?? false)
+            {
+                var supplier = _db.Suppliers.SingleOrDefault(x => x.CompanyName == _orderDetailSupplierName);
+                if (supplier != null)
+                {
+                    supplier.CompanyName = value;
+                    _db.SaveChanges();
+                }
+                SelectedOrderDetail = SelectedOrderDetail;
+                ReloadProducts();
+            }
+
+            _orderDetailSupplierName = value;
+            NotifyPropertyChanged(nameof(OrderDetailSupplierName));
+        }
+    }
+
+    private void ReloadProducts() 
+        => Products = _db?.Products.Include(x => x.Category).AsObservableCollection() ?? new ObservableCollection<Product>();
+
     #endregion
 
-    #region AddOrderDetail Properties
+    #region Add OrderDetail Properties
     private ObservableCollection<Product> _products = new();
     public ObservableCollection<Product> Products
     {
@@ -146,7 +174,7 @@ public class MainWindowViewModel: ObservableObject
         return this;
     }
 
-    #region AddOrderDetail
+    #region Add OrderDetail Commands
     public ICommand AddOrderDetailCommand 
         => new RelayCommand<OrderDetail>(AddOrderDetail, _ => SelectedOrder != null && SelectedProduct != null && OrderDetailQuantity > 0);
 
@@ -169,7 +197,7 @@ public class MainWindowViewModel: ObservableObject
     }
     #endregion
 
-    #region Quantity ICommands
+    #region Quantity Commands
     public ICommand IncreaseQuantity => new RelayCommand<int>(_ => OrderDetailQuantity++);
 
     public ICommand DecreaseQuantity => new RelayCommand<int>(_ => OrderDetailQuantity = OrderDetailQuantity > 0 ? OrderDetailQuantity - 1 : OrderDetailQuantity);
